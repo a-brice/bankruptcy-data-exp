@@ -752,6 +752,8 @@ The dataset is about bankruptcy prediction of Polish companies. In theses datase
 
 
 We are in a case of supervised learning, a classification with labelled data which indicates whether the company bankrupted or not.
+
+
 The goal of this project is to explore, analyse and make data visualisation before applying machine learning algorithms in order to predict and classify, with the best accuracy, the situation of a company. 
 In total, we have more than 43 000 companies' status inequitably distributed on 5 years.
  
