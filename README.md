@@ -752,9 +752,8 @@ The dataset is about bankruptcy prediction of Polish companies. In theses datase
 We are in a case of supervised learning, a classification with labelled data which indicates whether the company bankrupted or not.
 
 
-In this dataset, the columns represent the **64 variables** we will use to predict bankruptcy. We can see there is multiple missing values symbolised by a **"?"** in many fields.
-
-
 The goal of this project is to explore, analyse and make data visualisation before applying machine learning algorithms in order to predict and classify, with the best accuracy, the situation of a company. 
-In total, we have more than 43 000 companies' status inequitably distributed on 5 years.
+
+
+In total in this dataset, we have more than 43 000 companies' status inequitably distributed on 5 years. The columns represent the **64 variables** we will use to predict bankruptcy. Among these variables, we can see there is underlying variables which appear and impact a lot of variables, like total assets, total liabilities, net profit and much more that we can use directly in order to have fewer variables to include in our model without loss of information. We can also see there is multiple missing values symbolised by a **"?"** in many fields.
  
