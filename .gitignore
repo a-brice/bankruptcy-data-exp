@@ -1,4 +1,4 @@
-formula/*
+formula/*
 *.svg
 formula.py
-.ipynb_checkpoints*
+*/.ipynb_checkpoints*
