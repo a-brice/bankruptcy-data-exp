@@ -32,7 +32,7 @@ def description_format():
           
   
 
-def big_dataset(path):
+def full_dataset(path):
     """Get the data.csv which is the concatenation of the 5 files"""
     files = list(pathlib.Path(path).rglob('*year.csv'))
     
@@ -48,4 +48,4 @@ if __name__ == '__main__':
     path = './extension/'
     # to_csv(path)
     # description_format()
-    # big_dataset(path)
+    # full_dataset(path)
