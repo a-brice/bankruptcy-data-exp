@@ -4,6 +4,7 @@ import pathlib
 import os, json
 
 def to_csv(path):
+    """Get the .arff data to CSV format"""
     dirpath = pathlib.Path(path)
     files = dirpath.rglob('*.arff')
     
@@ -18,6 +19,7 @@ def to_csv(path):
             
 
 def description_format():
+    """Get the JSON Description"""
     dic = {}
     with open('description.txt', 'r') as f:
         for line in f:
@@ -29,9 +31,21 @@ def description_format():
         f.write(json.dumps(dic, indent=4))
           
   
+
+def big_dataset(path):
+    """Get the data.csv which is the concatenation of the 5 files"""
+    files = list(pathlib.Path(path).rglob('*year.csv'))
+    
+    data = [pd.read_csv(file).assign(year=file.stem) for file in files]
+    data = pd.concat(data, ignore_index=True)
+    data = data[['year', *data.columns.drop('year')]]
+    
+    data.to_csv(path + 'csv/data.csv', index=False)
+    
     
             
-if __name__ != '__main__':
+if __name__ == '__main__':
     path = './extension/'
-    to_csv(path)
-    description_format()
+    # to_csv(path)
+    # description_format()
+    # big_dataset(path)
