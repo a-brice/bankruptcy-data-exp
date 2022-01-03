@@ -4,14 +4,138 @@ body{
 
 header{
     width: 100%;
-    height: 150px;
-    background: linear-gradient(234deg, rgba(69,1,89,1) 0%, rgba(46,10,57,1) 45%, rgba(70,40,79,1) 100%);
+    background: linear-gradient(234deg, rgba(46,10,57,1) 45%, rgba(70,40,79,1) 100%);
 }
 
-h1{
+header h1{
     text-align: center;
     margin: 0;
+    padding: 20px;
     font: 2.2em italic Verdana;
     color: rgb(99, 74, 107);
     text-shadow: -1px -1px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5);
+}
+
+#pred_form{
+    width: 80%;
+    padding: 30px;
+    margin: 40px auto;
+    font: 1.4em Times;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+
+#pred_form form{
+    width: 42%;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 1px 2px 1px gray;
+    background: linear-gradient(234deg, rgba(225,221,227,0.7) 0%, rgba(110,107,111,0.7) 100%);;
+}
+
+#pred_form form input{
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid rgb(102, 102, 102);
+    margin: 5px;
+}
+
+#pred_form form input[type=submit]{
+    float: right;
+    font: 1em Times;
+    height: 40px;
+}
+
+#pred_form form .group{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#btn_file{
+    border-radius: 10px;
+    border: 1px gray solid;
+    padding: 10px;
+    width: 190px;
+    background-color: rgb(229, 226, 226);
+}
+
+#btn_file label{
+    width: 100%;
+    text-align: center;
+}
+
+#pred_table{
+    width: 80%;
+    margin: auto;
+    overflow-x: scroll;
+    border:2px rgb(99, 74, 107) solid;
+    padding: 0 10px;
+    border-width: 0 2px;
+}
+
+#grp_dd{
+    position: sticky;
+    top: 500px;
+    right: 70px;
+    float: right;
+    width: 200px;
+}
+
+#grp_dd .div_dd{
+    position: relative;
+    bottom: 200px;
+}
+
+#btn_dd{
+    width: 100px;
+    height: 100px;
+    border: 0;
+    float: right;
+}
+
+#drop_down ul{
+    background: linear-gradient(234deg, rgba(225,221,227,0.99) 0%, rgba(224,108,237,0.99) 100%);
+    padding: 10px 30px;
+    border: 1px gray solid;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px rgba(155, 153, 153, 0.397);
+    width: 110px;
+    list-style-type: none;
+}
+
+#drop_down ul li{
+    padding: 10px 0;
+}
+#drop_down ul a{
+    font: 1.2em Times;
+    color: rgb(53, 52, 52);
+    text-decoration: none;
+}
+#drop_down ul a:hover{
+    color: indigo;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+span#doc{
+    color: rgb(52, 100, 5);
+    font: 0.7em italic serif;
+}
+
+
+
+
+
+
+/* index2 */
+
+.card{
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 90%;
 }

@@ -1,15 +1,146 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'core/base.css' %}">
-    <title>API Bankruptcy Prediction</title>
-</head>
-<body>
-    <header>
-        <h1>Prediction API of company bankruptcy</h1>
-    </header>
-</body>
-</html>
+{% extends 'core/base.html' %}
+
+{%block title%}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{%endblock%}
+
+{%block content%}
+<div>
+    <div class="card bg-light">
+        <div class="card-header">Make prediction</div>
+        <div class="card-body">
+            <div>
+                <form action="{% url 'predict' %}" method="post" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Data importation</label>
+                      <div class="col-sm-10 data_imp">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-info active">
+                              <input type="radio" name="options_input1" value="csv" id="option1" autocomplete="off" checked> CSV File
+                            </label>
+                            <label class="btn btn-info">
+                              <input type="radio" name="options_input1" value="entry" id="option2" autocomplete="off"> Entry
+                            </label>
+                          </div>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group row data_impm1">
+                      <label for="inputPassword" class="col-sm-2 col-form-label">Company data</label>
+                      <div class="col-sm-10">
+                        <div class="input-group mb-3">
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="file" id="inputGroupFile02">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                          </div>
+                        </div>
+                        <small id="doc" class="form-text text-muted">No file selected</small>                        
+                      </div>
+                    </div>
+                    <div class="form-group row data_impm2" style="display: none;">
+                        <label class="col-sm-2 col-form-label">Company data</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="entry" placeholder="0.4346,0.5465,0.7654,3454.23,34.123,...">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Year</label>
+                        <div class="col-sm-10">
+                            <select name="year" class="form-control">
+                                <option value="1year" selected>First year</option>
+                                <option value="2year">Second year</option>
+                                <option value="3year">Third year</option>
+                                <option value="4year">Fourth year</option>
+                                <option value="5year">Fifth year</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Data Preparation</label>
+                        <div class="col-sm-10">
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-info active">
+                                <input type="radio" name="options_input2" value=1 id="option1" autocomplete="off" checked> Slight
+                              </label>
+                              <label class="btn btn-info">
+                                <input type="radio" name="options_input2" value=2 id="option2" autocomplete="off"> Medium
+                              </label>
+                              <label class="btn btn-info">
+                                <input type="radio" name="options_input2" value=3 id="option3" autocomplete="off"> Strong
+                              </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Standardization</label>
+                        <div class="col-sm-10">
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-info active">
+                                <input type="radio" name="options_input3" value=1 id="option1" autocomplete="off" checked> Normalize
+                              </label>
+                              <label class="btn btn-info">
+                                <input type="radio" name="options_input3" value=2 id="option2" autocomplete="off"> Standardize
+                              </label>
+                              <label class="btn btn-info">
+                                <input type="radio" name="options_input3" value=3 id="option3" autocomplete="off"> Both
+                              </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div  class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-outline-secondary">Predict</button>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% if prediction %}
+<div id="pred_table">
+    {{prediction|safe}}
+</div>
+{% endif%}
+
+<script>
+document.querySelectorAll('.data_imp label').forEach(x => {
+    if (x.children[0].id == 'option1'){
+        x.onclick = (e) => {
+            document.querySelector('.data_impm1').style.display = '';
+            document.querySelector('.data_impm2').style.display = 'none';
+        } 
+    } else{
+        x.onclick = (e) => {
+            document.querySelector('.data_impm1').style.display = 'none';
+            document.querySelector('.data_impm2').style.display = '';
+        } 
+    }
+})
+
+file_input = document.getElementsByName('file')[0];
+file_input.onchange = function(e){
+    if (file_input.files.length >= 1)
+            document.getElementById('doc').textContent = file_input.files[0].name;
+        }
+</script>
+{%endblock%}
+
+
