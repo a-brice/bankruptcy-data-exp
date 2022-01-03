@@ -1,0 +1,8 @@
+section{
+    min-height: 300px;
+    width: 100%;
+}
+
+#s-first{
+    background-color: aqua;
+}
