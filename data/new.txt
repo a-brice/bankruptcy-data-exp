@@ -1,0 +1,39 @@
+net profit
+total assets
+total liabilities
+working capital
+current assets
+short-term liabilities
+retained earnings
+EBIT
+book value of equity
+sales
+sales (n)
+sales (n-1)
+equity
+gross profit
+receivebles
+cash
+short-term securities
+operating expenses
+depreciation
+extraordinary items
+financial expenses
+total liabilities
+interest
+inventory
+profit on operating activities
+net profit
+gross profit (in 3 years)
+share capital
+fixed assets
+logarithm of total assets
+current liabilities
+cost of products sold
+profit on sales
+long-term liabilities
+constant capital
+rotation receivables
+inventory turnover in days
+EBITDA 
+total costs
