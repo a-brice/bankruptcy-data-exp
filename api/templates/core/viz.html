@@ -4,78 +4,10 @@
 
 {% block title %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link href="{% static 'core/viz.css' %}">
+<link rel="stylesheet" href="{% static 'core/viz.css' %}">
 {%endblock%}
 {% block content %}
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Lora:wght@642&display=swap');
-    section{
-    min-height: 300px;
-    width: 90%;
-    display: flex;
-    margin: auto;
-    margin-top: 30px;
-    justify-content: space-between;
-    border-bottom: 1px gray solid;
-    padding-bottom: 20px;
-}
-
-#s-first .total-nb{
-    width: 20%;
-    display: flex;
-}
-
-.total-nb .nb-div{
-    width: 280px;
-    height: 260px;
-    border-radius: 10px;
-    border: 1px rgb(143, 143, 143) solid;
-    background: linear-gradient(90deg,  rgba(113,134,134,0.75) 28%, rgba(193,203,206,0.82) 100%);
-    margin: auto;
-    box-shadow: 1px 1px 1px gray;
-    text-align: center;
-    font-family: Lora, Times, serif;
-}
-
-.total-nb .nb-div h2{
-    margin-top: 40px;
-    font-size: 4em;
-}
-
-.total-nb .nb-div p{
-    font-size: 2em;
-}
-
-#s-first .lineplot{
-    width: 60%;
-}
-
-#s-first .pie{
-    width: 20%;
-}
-
-#s-sec .tab{
-    border: 1px solid gray;
-    overflow: scroll;
-    width: 98%;
-    margin: auto;
-    height: 350px;
-    margin: 100px 0;
-}
-
-#s-third .bar{
-    margin: auto;
-    width: 80%;
-}
-
-h1{
-    font: 3em Times;
-    margin-top: 70px;
-    text-align: center;
-    text-decoration: underline;
-}
-</style>
 <h1>Interative visualisations</h1>
 
 <section id="s-first">
@@ -104,15 +36,47 @@ h1{
         {{bar | safe}}
     </div>
 </section>
+<form method="get">
+    <section id="s-fourth">
+        <div>
+            {{scatter | safe}}
+            <div class="form-group row">
+                    <div class="col-sm-4">
+                        <select id="inputState" name="scatter1" class="form-control">
+                        <option selected>Choose...</option>
+                        {% for x in options %}
+                        <option>{{x}}</option>
+                        {%endfor%}
+                      </select>
+                    </div> 
+                    <div class="col-sm-4">
+                        <select id="inputState" name="scatter2" class="form-control">
+                        <option selected>Choose...</option>
+                        {% for x in options %}
+                        <option>{{x}}</option>
+                        {%endfor%}
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary col-sm-2">Check plot</button>
+            </div>
+        </div>
+        <div>
+            {{butterfly | safe}}
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <select id="inputState" name="violin" class="form-control">
+                    <option selected>Choose...</option>
+                    {% for x in options %}
+                    <option>{{x}}</option>
+                    {%endfor%}
+                  </select>
+                </div> 
+                <button type="submit" class="btn btn-primary col-sm-3">Check plot</button>
+        </div>
+        </div>
+    </section>
 
-<section id="s-fourth">
-    <div>
-        {{scatter | safe}}
-    </div>
-    <div>
-        {{butterfly | safe}}
-    </div>
-</section>
+</form>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 {%endblock%}

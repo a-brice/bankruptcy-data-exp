@@ -79,21 +79,18 @@ header h1{
 }
 
 #grp_dd{
-    position: sticky;
-    top: 500px;
-    right: 70px;
-    float: right;
-    width: 200px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 50px;
 }
 
 #grp_dd .div_dd{
-    position: relative;
-    bottom: 200px;
+    position: sticky;
+    top: 280px;
 }
 
 #btn_dd{
-    width: 100px;
-    height: 100px;
     border: 0;
     float: right;
 }
@@ -104,7 +101,7 @@ header h1{
     border: 1px gray solid;
     border-radius: 5px;
     box-shadow: 1px 1px 1px rgba(155, 153, 153, 0.397);
-    width: 110px;
+    width: 180px;
     list-style-type: none;
 }
 
