@@ -1,0 +1,35 @@
+U1	total assets
+U2	net profit 
+U3	total liabilities
+U4	working capital
+U5	retained earnings
+U6	EBIT 
+U7	book value of equity
+U8	sales
+U9	equity
+U10	gross profit
+U11	short-term liabilities
+U12	depreciation
+U13	interest
+U14	inventory
+U15	profit on operating activities
+U16	gross profit (in 3 years)
+U17	share capital
+U18	financial expenses
+U19	fixed assets
+U20	cash
+U21	operating expenses
+U22	profit on sales
+U23	total sales
+U24	constant capital
+U25	profit on sales
+U26	current assets
+U27	cost of products sold
+U28	EBITDA 
+U29	total costs
+U30	long-term liabilities
+U31	receivables
+U32	current liabilities
+U33	sales (n) / sales (n-1)
+U34	rotation receivables + inventory turnover in days
+U35	year
