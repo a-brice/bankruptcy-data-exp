@@ -1,0 +1,97 @@
+{% extends "core/base.html"%}
+
+{% load static %}
+
+{% block title %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'core/viz.css' %}">
+{%endblock%}
+{% block content %}
+
+<h1>Interative visualisations</h1>
+
+<section id="s-first">
+    <div class="total-nb">
+        <div class="nb-div">
+            <h2>{{ total_nb }}</h2>
+            <p>Companies in the <br>dataset</p>
+        </div>
+    </div>
+    <div class="lineplot">
+        {{ line_plot | safe }}
+    </div>
+    <div class="pie">
+        {{ pie | safe }}
+    </div>
+</section>
+
+<section id="s-sec">
+    <div>
+        <h3>Dataset after preprocessing with underlying variables</h3>
+        <div class="tab">
+            {{tab | safe}}
+        </div>
+    </div>
+</section>
+
+<section id="s-third">
+    <div class="bar">
+        {{bar | safe}}
+    </div>
+</section>
+<form method="get">
+    <section id="s-fourth">
+        <div>
+            {{scatter | safe}}
+            <div class="form-group row">
+                    <div class="col-sm-4">
+                        <select id="inputState" name="scatter1" class="form-control">
+                            {% if not v1 %}
+                            <option selected>Choose...</option>
+                            {%else %}
+                            <option selected>{{v1}}</option>
+                            {% endif %}
+                        {% for x in options %}
+                        <option>{{x}}</option>
+                        {%endfor%}
+                      </select>
+                    </div> 
+                    <div class="col-sm-4">
+                        <select id="inputState" name="scatter2" class="form-control">
+                            {% if not v2 %}
+                            <option selected>Choose...</option>
+                            {%else %}
+                            <option selected>{{v2}}</option>
+                            {% endif %}
+                        {% for x in options %}
+                        <option>{{x}}</option>
+                        {%endfor%}
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary col-sm-2">Check plot</button>
+            </div>
+        </div>
+        <div>
+            {{butterfly | safe}}
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <select id="inputState" name="violin" class="form-control">
+                    {% if not v %}
+                    <option selected>Choose...</option>
+                    {%else %}
+                    <option selected>{{v}}</option>
+                    {% endif %}
+                    {% for x in options %}
+                    <option>{{x}}</option>
+                    {%endfor%}
+                  </select>
+                </div> 
+                <button type="submit" class="btn btn-primary col-sm-3">Check plot</button>
+        </div>
+        </div>
+    </section>
+
+</form>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+{%endblock%}
