@@ -26,8 +26,11 @@
 </section>
 
 <section id="s-sec">
-    <div class="tab">
-        {{tab | safe}}
+    <div>
+        <h3>Dataset after preprocessing with underlying variables</h3>
+        <div class="tab">
+            {{tab | safe}}
+        </div>
     </div>
 </section>
 
@@ -43,7 +46,11 @@
             <div class="form-group row">
                     <div class="col-sm-4">
                         <select id="inputState" name="scatter1" class="form-control">
-                        <option selected>Choose...</option>
+                            {% if not v1 %}
+                            <option selected>Choose...</option>
+                            {%else %}
+                            <option selected>{{v1}}</option>
+                            {% endif %}
                         {% for x in options %}
                         <option>{{x}}</option>
                         {%endfor%}
@@ -51,7 +58,11 @@
                     </div> 
                     <div class="col-sm-4">
                         <select id="inputState" name="scatter2" class="form-control">
-                        <option selected>Choose...</option>
+                            {% if not v2 %}
+                            <option selected>Choose...</option>
+                            {%else %}
+                            <option selected>{{v2}}</option>
+                            {% endif %}
                         {% for x in options %}
                         <option>{{x}}</option>
                         {%endfor%}
@@ -65,7 +76,11 @@
             <div class="form-group row">
                 <div class="col-sm-6">
                     <select id="inputState" name="violin" class="form-control">
+                    {% if not v %}
                     <option selected>Choose...</option>
+                    {%else %}
+                    <option selected>{{v}}</option>
+                    {% endif %}
                     {% for x in options %}
                     <option>{{x}}</option>
                     {%endfor%}

@@ -8,6 +8,7 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.express as px
 import json
+from .data_preprocessing import data_preparation, underlying_data
 
 
 # Data importation
@@ -15,9 +16,25 @@ data = pd.read_csv('./static/data.csv')
 data[data == '?'] = np.NAN
 data[data.columns.drop('year')] = data[data.columns.drop('year')].astype(float)
 
+udata = pd.read_csv('./static/udata.csv')
+
+
 with open('./static/description.json', 'r') as f:
     desc = json.loads(f.read())
     desc['X65'] = 'bankrupt'
+
+
+with open('./static/udata_description.json', 'r') as f:
+    udesc = json.loads(f.read())
+    udesc['U35'] = 'bankrupt'
+    
+    
+udata.columns = udata.columns.map(
+    lambda x: udesc.get(x) if x != 'year' else 'year'
+)
+col = [*udata.columns[-2:], *udata.columns[:-2]]
+udata = udata[col]
+
 
 
 def index(req):
@@ -62,13 +79,15 @@ def viz(req):
     context['pie'] = plot(fig, output_type='div')
 
     # Array
-    context['tab'] = data.iloc[:12].to_html(classes='table table-striped text-center', justify='center')
+    context['tab'] = udata.head(100).to_html(classes='table table-striped text-center', justify='center')
     
     # ViolinPlot
     if  req.GET.get('violin'):
         v =  req.GET['violin']
         if not v in data.columns:
             v = 'X4'
+        else: 
+            context['v'] = v
     else:
         v = 'X2'
     context['butterfly'] = plot(px.violin(title='Density of a variable',
@@ -80,6 +99,9 @@ def viz(req):
         v1, v2 = req.GET['scatter1'], req.GET['scatter2']
         if not v1 in data.columns or not v2 in data.columns:
             v1, v2 = 'X1', 'X2'
+        else:
+            context['v1'] = v1
+            context['v2'] = v2
     else:
         v1, v2 = 'X1', 'X2'
 
@@ -104,19 +126,21 @@ def predict(req):
     context = {}
     if req.POST:
         year = req.POST['year']
+        opt = int(req.POST['options_input2']), int(req.POST['options_input3'])
         if req.POST['options_input1'] == "csv":
             file = req.FILES['file']
             fs = FileSystemStorage()
             filename = fs.save(file.name, file)
-            context['prediction'] = model_prediction(file=filename, year=year)
+            context['prediction'] = model_prediction(file=filename, year=year, opt=opt[0])
         if req.POST['options_input1'] == "entry":
             entry = req.POST['entry']
-            context['prediction'] = model_prediction(entry=entry, year=year)
+            context['prediction'] = model_prediction(entry=entry, year=year, opt=opt[0])
 
     return render(req, 'core/index.html', context=context)
 
 
-def model_prediction(file=None, entry=None, year=None):
+def model_prediction(file=None, entry=None, year=None, opt=None):
+    # Preprocessing
     if file:
         data = pd.read_csv('.' + settings.MEDIA_URL + file)
         data['year'] = year
@@ -124,5 +148,14 @@ def model_prediction(file=None, entry=None, year=None):
     elif entry:
         data = pd.DataFrame([year] + entry.split(',')).T
         data.columns = ['year'] + [f'X{i}' for i in range(1,65)]
+    
+    data = data_preparation(data, option=opt)
+    # TODO scaling
+    # scaler = pickle.load('../static/model/scaler.pk')
+    # if opt == 1
+    # scaler.transform(data)
+
+    # model importation
+
 
     return data.to_html(classes='table table-striped text-center', justify='center')

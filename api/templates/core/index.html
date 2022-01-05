@@ -86,18 +86,16 @@
                         <label class="col-sm-2 col-form-label">Standardization</label>
                         <div class="col-sm-10">
                           <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label id="no_scaling" class="btn btn-info">
+                                <input type="radio" name="options_input3" value=1 id="option1" autocomplete="off"> No scaling
+                              </label>
                               <label class="btn btn-info active">
-                                <input type="radio" name="options_input3" value=1 id="option1" autocomplete="off" checked> Normalize
-                              </label>
-                              <label class="btn btn-info">
-                                <input type="radio" name="options_input3" value=2 id="option2" autocomplete="off"> Standardize
-                              </label>
-                              <label class="btn btn-info">
-                                <input type="radio" name="options_input3" value=3 id="option3" autocomplete="off"> Both
+                                <input type="radio" name="options_input3" value=2 id="option2" checked autocomplete="off"> Standardize Data
                               </label>
                             </div>
                         </div>
-                    </div>
+                        <small id="doc_st" style="display: none;">function not developed yet</small>
+                      </div>
 
                     
                     <div  class="form-group row">
@@ -140,6 +138,11 @@ file_input.onchange = function(e){
     if (file_input.files.length >= 1)
             document.getElementById('doc').textContent = file_input.files[0].name;
         }
+
+document.getElementById('no_scaling').onclick = (e) => {
+  document.getElementById('doc_st').style.display = '';
+}
+
 </script>
 {%endblock%}
 

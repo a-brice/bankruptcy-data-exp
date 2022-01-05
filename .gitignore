@@ -4,3 +4,4 @@ formula/*
 */.ipynb_checkpoints*
 *__pycache__*
 env/
+api/media/*

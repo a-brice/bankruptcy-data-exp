@@ -44,13 +44,16 @@ width: 45%;
 width: 35%;
 }
 
+#s-sec > div{
+    margin: auto;
+    overflow: scroll;
+}
+
 #s-sec .tab{
-border: 1px solid gray;
-overflow: scroll;
-width: 98%;
-margin: auto;
-height: 350px;
-margin: 100px 0;
+    border: 1px solid gray;
+    width: 98%;
+    margin: auto;
+    height: 350px;
 }
 
 #s-third .bar{
