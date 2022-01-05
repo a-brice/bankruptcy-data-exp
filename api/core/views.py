@@ -7,7 +7,7 @@ from plotly.offline import plot
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.express as px
-import json
+import json, pickle
 from .data_preprocessing import data_preparation, underlying_data
 
 
@@ -150,9 +150,13 @@ def model_prediction(file=None, entry=None, year=None, opt=None):
         data.columns = ['year'] + [f'X{i}' for i in range(1,65)]
     
     data = data_preparation(data, option=opt)
-    # TODO scaling
-    # scaler = pickle.load('../static/model/scaler.pk')
-    # if opt == 1
+    if opt == 3:
+        scaler_path = 'saved_model/scaler.sav'
+    else:
+        scaler_path = '../static/best_model/uscaler.sav'
+
+    with open(scaler_path, 'rb') as f:
+        scaler = pickle.load(f)
     # scaler.transform(data)
 
     # model importation
