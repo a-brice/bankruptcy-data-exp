@@ -71,11 +71,13 @@ header h1{
 
 #pred_table{
     width: 80%;
-    margin: auto;
-    overflow-x: scroll;
+    margin: 90px auto;
+    overflow: scroll;
     border:2px rgb(99, 74, 107) solid;
     padding: 0 10px;
     border-width: 0 2px;
+    margin-top: 50px;
+    max-height: 400px;
 }
 
 #grp_dd{

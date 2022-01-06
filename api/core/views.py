@@ -8,7 +8,7 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.express as px
 import json, pickle
-from .data_preprocessing import data_preparation, underlying_data
+from .data_preprocessing import data_preparation
 
 
 # Data importation
@@ -27,6 +27,11 @@ with open('./static/description.json', 'r') as f:
 with open('./static/udata_description.json', 'r') as f:
     udesc = json.loads(f.read())
     udesc['U35'] = 'bankrupt'
+
+scaler_path = './static/best_model/scaler.sav'
+with open(scaler_path, 'rb') as f:
+    scaler = pickle.load(f)
+    
     
     
 udata.columns = udata.columns.map(
@@ -131,35 +136,99 @@ def predict(req):
             file = req.FILES['file']
             fs = FileSystemStorage()
             filename = fs.save(file.name, file)
-            context['prediction'] = model_prediction(file=filename, year=year, opt=opt[0])
+            context['prediction'] = model_prediction(file=filename, year=year, opt=opt)
         if req.POST['options_input1'] == "entry":
             entry = req.POST['entry']
-            context['prediction'] = model_prediction(entry=entry, year=year, opt=opt[0])
+            context['prediction'] = model_prediction(entry=entry, year=year, opt=opt)
 
     return render(req, 'core/index.html', context=context)
+
 
 
 def model_prediction(file=None, entry=None, year=None, opt=None):
     # Preprocessing
     if file:
         data = pd.read_csv('.' + settings.MEDIA_URL + file)
-        data['year'] = year
-        data = data.head(10)
+        for i in range(1,6):
+            data[f'year_{i}year'] = 0
+        data[f'year_{year[0]}year'] = 1
     elif entry:
-        data = pd.DataFrame([year] + entry.split(',')).T
-        data.columns = ['year'] + [f'X{i}' for i in range(1,65)]
-    
-    data = data_preparation(data, option=opt)
-    if opt == 3:
-        scaler_path = 'saved_model/scaler.sav'
-    else:
-        scaler_path = '../static/best_model/uscaler.sav'
+        data = pd.DataFrame(entry.split(',')).T
+        for i in range(1,6):
+            data[f'year_{i}year'] = 0
 
+        data[f'year_{year[0]}year'] = 1
+        col = [f'X{i}' for i in range(1,len(data.columns)-4)] + list(data.columns[-5:])
+        data.columns = col
+        data[data == '?'] = np.NAN
+        data = data.fillna(0)
+    
+    
+    show_score = False
+    
+    if 'X65' in data.columns: 
+        show_score = True
+        y = data.pop('X65').astype(int)
+
+    data = data_preparation(data, option=opt[0])
+    for i in range(1,6):
+        if i != year[0]:
+            data[f'year_{i}year'] = 0
+
+    if opt[0] == 3:
+        scaler_path = './static/best_model/uscaler.sav'
+    else:
+        scaler_path = './static/best_model/scaler.sav'
+    
     with open(scaler_path, 'rb') as f:
         scaler = pickle.load(f)
-    # scaler.transform(data)
+    
+    if opt[1] == 2:
+        _data = pd.DataFrame(scaler.transform(data.drop(columns=data.columns[-5:])), 
+                        columns=data.columns[:-5])
+        data = pd.concat([_data, data[data.columns[-5:]]], axis=1)
 
     # model importation
 
+    models = {}
 
-    return data.to_html(classes='table table-striped text-center', justify='center')
+    if opt[0] != 3: 
+        for m in ['lr', 'lda', 'rf', 'gbm', 'svm', 'mlp']:
+            with open(f'./static/best_model/{m}.sav', 'rb') as f:
+                models[m] = pickle.load(f)
+    else:
+        for m in ['ulr', 'umlp']:
+            with open(f'./static/best_model/{m}.sav', 'rb') as f:
+                models[m] = pickle.load(f)
+    
+    # model prediction
+
+    results = []
+    scores = []
+
+    for model in models.values():
+        results.append(model.predict(data))
+        if show_score:
+            scores.append(model.score(data, y))
+        
+
+    prediction =  pd.DataFrame(results)
+
+    if opt[0] != 3:
+        prediction.index = [
+            "Logistic Regression",
+            "LDA", "Random Forest", 
+            "Gradient Boosting",
+            "Support Vector Machine",
+            "Multi Layer Perceptron"]
+    
+    else:
+        prediction.index = ["Logistic Regression","Multi Layer Perceptron"]
+
+    if show_score:
+        prediction.insert(0, 'score', scores)
+    
+
+    return prediction.iloc[:,:100].T.to_html(
+        classes='table table-striped text-center', 
+        justify='center')

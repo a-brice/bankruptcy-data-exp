@@ -6,16 +6,11 @@ import os, json
 
 def data_preparation(data, option):
     data[data == '?'] = np.NAN
-    data[data.columns.drop(['year', 'X65'])] = data[data.columns.drop(['year', 'X65'])].astype(float)
+    data = data.astype(float)
 
-    if option == 1:
-        data.fillna(data.mean(), inplace=True)
-        
-    if option == 2 or option == 3:
-        useless_col = data.isna().sum()[data.isna().sum() > 5000].index
+    if  option == 2:
+        useless_col = ['X21', 'X37']
         data.drop(useless_col, axis=1, inplace=True)
-        useless_row = data.isna().sum(axis=1)[data.isna().sum(axis=1) > 10].index
-        data.drop(useless_row, axis=0, inplace=True)
         data.fillna(data.mean(), inplace=True)
     
     if option == 3:
@@ -135,11 +130,12 @@ def underlying_data(data):
     # rotation receivables + inventory turnover in days
     newdata['U34'] = data.X43
     
-    # year
-    newdata['year'] = data.year
-    
-    if 'X65' in data.columns:
-        newdata['U35'] = data.X65
+
+    newdata.replace(np.inf, np.NAN, inplace=True)
+    newdata.fillna(newdata.mean(), inplace=True)
+    useless_col = ['U18', 'U31', 'U33']
+    newdata.drop(columns=useless_col, inplace=True)
+
     
     return newdata
 
