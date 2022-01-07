@@ -764,7 +764,7 @@ In total in this dataset, we have more than 43 000 companies' status inequitably
  
 <h3>To launch the API</h3>
 <hr>
-To launch the API, you must install some dependancies first. (Window) From a shell from the root directory, enter the following :
+To launch the API, you must install some dependencies first. (Window) From a shell from the root directory, enter the following :
 
 ```sh
 >> python -m venv env
