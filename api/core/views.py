@@ -3,6 +3,7 @@ from django.core.files.storage import FileSystemStorage
 import pandas as pd
 import numpy as np
 from django.conf import settings
+from django.templatetags.static import static
 from plotly.offline import plot
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
@@ -12,23 +13,23 @@ from .data_preprocessing import data_preparation
 
 
 # Data importation
-data = pd.read_csv('./static/data.csv')
+data = pd.read_csv('.' + static('data.csv'))
 data[data == '?'] = np.NAN
 data[data.columns.drop('year')] = data[data.columns.drop('year')].astype(float)
 
-udata = pd.read_csv('./static/udata.csv')
+udata = pd.read_csv('.' + static('udata.csv'))
 
 
-with open('./static/description.json', 'r') as f:
+with open('.' + static('description.json'), 'r') as f:
     desc = json.loads(f.read())
     desc['X65'] = 'bankrupt'
 
 
-with open('./static/udata_description.json', 'r') as f:
+with open('.' + static('udata_description.json'), 'r') as f:
     udesc = json.loads(f.read())
     udesc['U35'] = 'bankrupt'
 
-scaler_path = './static/best_model/scaler.sav'
+scaler_path = '.' + static('best_model/scaler.sav')
 with open(scaler_path, 'rb') as f:
     scaler = pickle.load(f)
     
@@ -176,9 +177,9 @@ def model_prediction(file=None, entry=None, year=None, opt=None):
             data[f'year_{i}year'] = 0
 
     if opt[0] == 3:
-        scaler_path = './static/best_model/uscaler.sav'
+        scaler_path = '.' + static('best_model/uscaler.sav')
     else:
-        scaler_path = './static/best_model/scaler.sav'
+        scaler_path = '.' + static('best_model/scaler.sav')
     
     with open(scaler_path, 'rb') as f:
         scaler = pickle.load(f)
@@ -232,3 +233,7 @@ def model_prediction(file=None, entry=None, year=None, opt=None):
     return prediction.iloc[:,:100].T.to_html(
         classes='table table-striped text-center', 
         justify='center')
+
+
+def download_example_file(req):
+    return HttpResponse()

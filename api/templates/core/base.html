@@ -30,17 +30,6 @@
                     <style>
                         #btn_dd{
                             background: url("{% static 'img/switch.svg' %}") no-repeat;
-                            background-size: 75%;
-                            background-position: 50% 50%;
-                            background-color: rgba(207, 207, 207, 0.842);
-                            border: 1px solid gray;
-                            border-radius: 50px;
-                            width: 70px;
-                            height: 70px;
-                        }
-                        #btn_dd:hover{
-                            border: 1px solid rgb(39, 39, 39);
-                            transform: scale(1.1);
                         }
                     </style>
                     <div id="btn_dd">
@@ -51,6 +40,8 @@
         
     </div>
     <script>
+        if (window.navigator.onLine == false)
+            alert('You need internet connection to properly visualise this API');
         document.querySelector('#btn_dd').onclick = function(e){
             div_dd = document.querySelector('#drop_down');
             if (div_dd.style.opacity == 0)

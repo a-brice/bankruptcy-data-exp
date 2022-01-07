@@ -2,6 +2,9 @@
 **The dataset is provided by Sebastian Tomczak and collected from Emerging Markets Information Service ([EMIS](https://www.emis.com/)) :
 https://archive.ics.uci.edu/ml/datasets/Polish+companies+bankruptcy+data**
 
+STARTER BELLOW
+
+
 The dataset is about bankruptcy prediction of Polish companies. In theses datasets, we retrieve information about emerging markets around the word (or Poland, who knows ?). A dataset is composed of thousands of rows where each row corresponds to a company. The attribute about theses companies is given in data/description.txt file. Here, is a sample of what we can have in a dataset : 
 
 
@@ -756,4 +759,21 @@ The goal of this project is to explore, analyse and make data visualisation befo
 
 
 In total in this dataset, we have more than 43 000 companies' status inequitably distributed on 5 years. The columns represent the **64 variables** we will use to predict bankruptcy. Among these variables, we can see there is underlying variables which appear and impact a lot of variables, like total assets, total liabilities, net profit and much more that we can use directly in order to have fewer variables to include in our model without loss of information. We can also see there is multiple missing values symbolised by a **"?"** in many fields.
+ 
+ 
+ 
+<h3>To launch the API</h3>
+<hr>
+To launch the API, you must install some dependancies first. (Window) From a shell from the root directory, enter the following :
+
+- python -m venv env
+- .\env\Scripts\activate
+- pip install -r requirement.txt
+
+When all installations are completed (a bit long), you can now run the API :
+
+- cd api
+- python api/manage.py runserver
+
+And after that, go to http://127.0.0.1:8000 and explore !
  

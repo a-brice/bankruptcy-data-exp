@@ -5,3 +5,4 @@ formula/*
 *__pycache__*
 env/
 api/media/*
+!api/media/test_file.csv
