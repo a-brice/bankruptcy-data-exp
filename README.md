@@ -764,19 +764,27 @@ In total in this dataset, we have more than 43 000 companies' status inequitably
  
 <h3>To launch the API</h3>
 <hr>
+
+Start to clone the project : 
+
+```sh
+git clone https://github.com/a-brice/bankruptcy-data-exp.git
+cd bankruptcy-data-exp
+```
+
 To launch the API, you must install some dependencies first. (Window) From a shell from the root directory, enter the following :
 
 ```sh
->> python -m venv env
->> .\env\Scripts\activate
->> pip install -r requirement.txt
+python -m venv env
+.\env\Scripts\activate
+pip install -r requirement.txt
 ```
 
 When all installations are completed (a bit long), you can now run the API :
 
 ```sh
->> cd api
->> python manage.py runserver
+cd api
+python manage.py runserver
 ```
 And after that, go to http://127.0.0.1:8000 and explore !
  
